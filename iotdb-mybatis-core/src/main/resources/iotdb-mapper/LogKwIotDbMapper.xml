@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fcwenergy.iotdb.modules.mapper.LogKwIotDbMapper">
+    <resultMap id="BaseResultMap" type="com.fcwenergy.common.domain.entity.LogKw">
+        <result column="Time" jdbcType="TIMESTAMP" property="createTime" javaType="java.util.Date"
+                typeHandler="org.apache.ibatis.type.DateTypeHandler"/>
+        <result column="equipmentId" property="equipmentId"/>
+        <result column="gridKw" property="gridKw"/>
+        <result column="mpptKw" property="mpptKw"/>
+        <result column="battKw" property="battKw"/>
+        <result column="battInKw" property="battInKw"/>
+        <result column="battOutKw" property="battOutKw"/>
+        <result column="loadKw" property="loadKw"/>
+    </resultMap>
+
+    <resultMap id="BaseCountMap" type="com.fcwenergy.iotdb.base.CountNumDTO">
+        <result column="num" property="count"/>
+        <result column="Device" property="device"/>
+    </resultMap>
+
+    <sql id="QUERY_SELECT">
+        equipmentId,
+        gridKw,
+        mpptKw,
+        battKw,
+        battInKw,
+        battOutKw,
+        loadKw
+    </sql>
+
+    <sql id="QUERY_WHERE">
+        <where>
+            equipmentId is not null
+            <if test="query.name != null and query.name !=''">
+                and name = #{qeury.name}
+            </if>
+            <if test="baseParam.createTime != null and baseParam.createTime[0] != null">
+                and Time <![CDATA[ >= ]]>
+                #{baseParam.createTime[0], jdbcType=BIGINT, javaType=java.util.Date, typeHandler=com.fcwenergy.iotdb.handler.LongDateTypeHandler}
+            </if>
+            <if test="baseParam.createTime != null and baseParam.createTime[1] != null">
+                and Time <![CDATA[ <= ]]>
+                #{baseParam.createTime[1], jdbcType=BIGINT, javaType=java.util.Date, typeHandler=com.fcwenergy.iotdb.handler.LongDateTypeHandler}
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="queryList" resultMap="BaseResultMap">
+        select
+        <include refid="QUERY_SELECT"/>
+        from ${baseParam.path}
+        <include refid="QUERY_WHERE"/>
+        order by Time
+        <choose>
+            <when test="baseParam.sort == null">desc</when>
+            <otherwise>${baseParam.sort}</otherwise>
+        </choose>
+        limit #{baseParam.limit}
+        align by device
+    </select>
+
+
+    <select id="queryPage" resultMap="BaseResultMap">
+        select
+        <include refid="QUERY_SELECT"/>
+        from ${baseParam.path}
+        <include refid="QUERY_WHERE"/>
+        order by Time
+        <choose>
+            <when test="baseParam.sort == null">desc</when>
+            <otherwise>${baseParam.sort}</otherwise>
+        </choose>
+        limit #{pageSize} offset #{offset}
+        align by device
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer">
+        select count(activePower) as num
+        from ${baseParam.path}
+        <include refid="QUERY_WHERE"/>
+    </select>
+
+    <select id="queryCountList" resultMap="BaseCountMap">
+        select count(activePower) as num
+        from ${baseParam.path}
+        <include refid="QUERY_WHERE"/>
+        align by device
+    </select>
+
+    <delete id="delete">
+        delete
+        from ${baseParam.path}
+        <where>
+            <if test="createTime != null and createTime[0] != null">
+                and Time <![CDATA[ >= ]]>
+                #{createTime[0], jdbcType=BIGINT, javaType=java.util.Date, typeHandler=com.fcwenergy.iotdb.handler.LongDateTypeHandler}
+            </if>
+            <if test="createTime != null and createTime[1] != null">
+                and Time <![CDATA[ <= ]]>
+                #{createTime[1], jdbcType=BIGINT, javaType=java.util.Date, typeHandler=com.fcwenergy.iotdb.handler.LongDateTypeHandler}
+            </if>
+        </where>
+    </delete>
+
+</mapper>
