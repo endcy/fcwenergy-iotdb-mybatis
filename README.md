@@ -26,7 +26,7 @@
 - iotdb部署
     - 支持docker或jar运行部署
     - 推荐官方文档集群部署方案
-- 加入fcwenergy-iotdb-core工程
+- 加入[iotdb-mybatis-core](iotdb-mybatis-core)工程
     - 工程作为module嵌入到目标应用工程
     - 根据#开发流程自定义需要的时序数据逻辑
 
