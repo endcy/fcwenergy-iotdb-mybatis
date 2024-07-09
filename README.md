@@ -63,7 +63,7 @@
 
 ## 开发流程
 ### 开发主要变更点
-按需在[fcwenergy-iotdb-core]模块中的Modules包中新增所需时序数据实体操作；
+按需在[iotdb-mybatis-core]模块中的Modules包中新增所需时序数据实体操作；
 
 -
     1. 新增枚举类型DataCategoryEnum，定义数据在iotdb中的设备时序前缀（库）；
