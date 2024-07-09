@@ -1,6 +1,4 @@
 # IoTDB-Mybatis及基础应用
--
-
     本工程仅嵌入IotDB基础应用，包括IoTDB结合Mybatis操作和简化的时序数据对象增删查改开发流程。
     对IoTDB的内容不做过多介绍，暂不提供实际线上工程其他内容及高级应用（原工程：飞充网智慧能源(BigData-IoTDB)）。
 
@@ -9,9 +7,9 @@
 - [时序数据库IoTDB](https://iotdb.apache.org/)在该应用设备指标监控、流程日志等模块中扮演重要角色。将IoTDB与Mybatis框架结合，能极大方便时序库应用以及降低学习成本，本项目仅为主要基本功能示例。
 - <a href='https://fycev.com/'>英飞源-飞充网智慧能源</a>
 
-<img src="source/img_1.png" width = 60% alt="概述">
-<img src="source/img_2.png" width = 60% alt="特性">
-<img src="source/img.png" width = 60% alt="飞充网智慧能源-IoTDB应用">
+<img src="source/img_1.png" alt="概述">
+<img src="source/img_2.png" alt="特性">
+<img src="source/img.png" alt="飞充网智慧能源-IoTDB应用">
 
 ## 特性
 
@@ -38,7 +36,7 @@
 - 接口http://localhost:8060/logKw/random/add?equipmentId=1001 新增时序实体数据
 - 接口http://localhost:8060/logKw/list/days?equipmentId=1001 查询数据
 
-  <img src="source/img_3.png" width = 60% alt="测试验证示例">
+  <img src="source/img_3.png" alt="测试验证示例">
 
 ## 配置信息
 
