@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.infypower</groupId>
-    <artifactId>fcwenergy</artifactId>
+    <artifactId>fcwenergy-iotdb-mybatis</artifactId>
     <name>infypower-iotdb-mybatis</name>
     <packaging>pom</packaging>
     <version>2.6</version>

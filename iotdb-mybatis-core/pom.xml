@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>com.infypower</groupId>
-        <artifactId>fcwenergy</artifactId>
+        <artifactId>fcwenergy-iotdb-mybatis</artifactId>
         <version>2.6</version>
     </parent>
 
