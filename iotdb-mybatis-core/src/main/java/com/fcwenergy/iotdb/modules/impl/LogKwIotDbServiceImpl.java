@@ -44,7 +44,7 @@ public class LogKwIotDbServiceImpl extends AbstractIotDbUpdateService<LogKw> imp
     }
 
     @Override
-    public PageInfo<LogKw> queryAll(LogKwQueryParam query, Pageable pageable) {
+    public PageInfo<LogKw> queryPage(LogKwQueryParam query, Pageable pageable) {
         if (CollUtil.isEmpty(query.getCreateTime())) {
             //默认一个月内数据
             List<Date> createTimes = CollUtil.newArrayList(DateUtil.date().offset(DateField.DAY_OF_MONTH, -1), DateUtil.date());
@@ -88,7 +88,7 @@ public class LogKwIotDbServiceImpl extends AbstractIotDbUpdateService<LogKw> imp
     @SuppressWarnings("all")
     public IPage<LogKw> queryPage(IPage<LogKw> pageParam, LogKwQueryParam query) {
         Pageable pageable = PageRequest.of((int) pageParam.getCurrent() - 1, (int) pageParam.getSize());
-        PageInfo<LogKw> pageResult = queryAll(query, pageable);
+        PageInfo<LogKw> pageResult = queryPage(query, pageable);
         PageDTO<LogKw> page = new PageDTO<>(pageParam.getCurrent(), pageParam.getSize(), pageResult.getTotalElements());
         page.setRecords(pageResult.getContent());
         return page;

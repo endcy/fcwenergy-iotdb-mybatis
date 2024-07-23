@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public abstract class AbstractIotDbUpdateService<T> {
-    protected static final int MAX_QUERY_COUNT = 10000;
+    protected static final int MAX_QUERY_COUNT = 100000;
 
     @Setter
     @Getter

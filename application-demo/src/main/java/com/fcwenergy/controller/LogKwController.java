@@ -7,6 +7,10 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.fcwenergy.common.domain.entity.LogKw;
 import com.fcwenergy.common.domain.param.LogKwQueryParam;
+import com.fcwenergy.iotdb.base.BigdataBaseParam;
+import com.fcwenergy.iotdb.base.DataCategoryEnum;
+import com.fcwenergy.iotdb.dts.core.IBaseParamFunction;
+import com.fcwenergy.iotdb.dts.core.IotDbDataDTSService;
 import com.fcwenergy.iotdb.modules.LogKwIotDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * ...
@@ -27,6 +32,7 @@ import java.util.List;
 public class LogKwController {
 
     private final LogKwIotDbService logKwIotDbService;
+    private final IotDbDataDTSService<LogKwQueryParam, LogKw> dataDTSService;
 
     @GetMapping(value = "/random/add")
     @ResponseBody
@@ -59,6 +65,32 @@ public class LogKwController {
         return logKwIotDbService.queryAll(queryParam);
     }
 
+    /**
+     * @param equipmentId 设备id
+     * @return 状态
+     */
+    @GetMapping(value = "/dts/logKw")
+    @ResponseBody
+    public boolean dts(@RequestParam Long equipmentId,
+                       @RequestParam(required = false) Integer days) {
+        DateTime nowTime = DateUtil.date();
+        //同步最近七天数据
+        DateTime recentTime = DateUtil.offsetDay(nowTime, -ObjectUtil.defaultIfNull(days, 30));
+        LogKwQueryParam queryParam = LogKwQueryParam.builder()
+                                                    .equipmentId(equipmentId)
+                                                    .build();
+        IBaseParamFunction<LogKw> function = logKw -> BigdataBaseParam.builder()
+                                                                      .category(DataCategoryEnum.ES_KW_LOG)
+                                                                      .equipmentId(logKw.getEquipmentId())
+                                                                      .build();
+        CompletableFuture.runAsync(() -> dataDTSService.dataTransformBackUp(logKwIotDbService,
+                queryParam,
+                function,
+                recentTime,
+                nowTime
+        ));
+        return true;
+    }
 }
 
 

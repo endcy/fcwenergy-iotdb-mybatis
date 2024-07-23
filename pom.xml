@@ -14,6 +14,7 @@
         <module>common-domain</module>
         <module>iotdb-mybatis-core</module>
         <module>application-demo</module>
+        <module>iotdb-history-dts</module>
     </modules>
 
     <description>飞充网智慧能源</description>
@@ -31,6 +32,7 @@
         <java.version>1.8</java.version>
         <common-domain.version>1.0.0</common-domain.version>
         <iotdb-mybatis-core.version>1.0.0</iotdb-mybatis-core.version>
+        <iotdb-history-dts.version>1.0.0</iotdb-history-dts.version>
         <iotdb.version>1.1.0</iotdb.version>
         <lombok.version>1.18.26</lombok.version>
         <hutool.version>5.8.25</hutool.version>

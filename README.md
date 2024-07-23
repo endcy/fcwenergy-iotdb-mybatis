@@ -1,5 +1,5 @@
 # IoTDB-Mybatis及基础应用
-    本工程仅嵌入IotDB基础应用，包括IoTDB结合Mybatis操作和简化的时序数据对象增删查改开发流程。
+    本工程仅嵌入IotDB基础应用，包括IoTDB结合Mybatis操作和简化的时序数据对象增删查改开发流程，以及DTS数据同步的应用示例。
     对IoTDB的内容不做过多介绍，暂不提供实际线上工程其他内容及高级应用（原工程：飞充网智慧能源(BigData-IoTDB)）。
 
 ## 背景
@@ -20,13 +20,22 @@
 - 方便工程拓展，使用装饰器实现需要的其他备选库持久化操作，如MYSQL等；
 - 针对不便处理的时序路径、数据类型等，使用工程自定义的执行器完成相关逻辑；
 - 注解简化处理字符串参数类型查询匹配
+- iotdb异步数据备份，历史数据DTS服务
+- 接口集成测试，方便快速测试
+
+## 工程结构
+
+- [iotdb-mybatis-core](iotdb-mybatis-core) 核心工程模块，包含session的时序插入和mybatis集成的查询DML操作
+- [common-domain](common-domain) 领域模型，包含时序数据实体及其他公共参数相关实体
+- [iotdb-history-dts](iotdb-history-dts) 历史数据DTS服务
+- [application-demo](application-demo) 示例应用工程，包含时序数据实体查询新增触发等操作，集成测试接口验证等
 
 ## 部署准备
 
 - iotdb部署
     - 支持docker或jar运行部署
     - 推荐官方文档集群部署方案
-- 加入[iotdb-mybatis-core](iotdb-mybatis-core)工程
+- 加入[iotdb-mybatis-core](iotdb-mybatis-core)[iotdb-mybatis-core](iotdb-mybatis-core)工程
     - 工程作为module嵌入到目标应用工程
     - 根据#开发流程自定义需要的时序数据逻辑
 
@@ -34,7 +43,8 @@
 
 - 完善数据库连接和应用配置，运行Application
 - 接口http://localhost:8060/logKw/random/add?equipmentId=1001 新增时序实体数据
-- 接口http://localhost:8060/logKw/list/days?equipmentId=1001 查询数据
+- 接口http://localhost:8060/logKw/list/days?equipmentId=1001&days=7 查询数据
+- 接口http://localhost:8060/logKw/dts/logKw?equipmentId=1001&days=7 dts历史数据同步
 
   <img src="source/img_3.png" alt="测试验证示例">
 

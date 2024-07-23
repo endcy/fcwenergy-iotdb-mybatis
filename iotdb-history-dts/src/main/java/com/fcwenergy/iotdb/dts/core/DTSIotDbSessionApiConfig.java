@@ -1,5 +1,6 @@
-package com.fcwenergy.iotdb.config;
+package com.fcwenergy.iotdb.dts.core;
 
+import com.fcwenergy.iotdb.dts.config.IotDbDTSProperties;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,31 +12,32 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- * ...
+ * dts iotdb session api config
  *
  * @author endcy
- * @date 2024/06/23 18:30:30
+ * @date 2024/07/22 23:30:30
  */
 @Slf4j
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @RequiredArgsConstructor
-public class IotDbSessionApiConfig implements InitializingBean {
-    private final IotDbConfigProperties iotDbConfigProperties;
+public class DTSIotDbSessionApiConfig implements InitializingBean {
+
+    private final IotDbDTSProperties iotDbDTSProperties;
 
     @Getter
     public SessionPool sessionPool;
 
     private synchronized void constructCustomSessionPool() {
         this.sessionPool = new SessionPool.Builder()
-                .host(iotDbConfigProperties.getHost())
-                .port(iotDbConfigProperties.getPort())
-                .user(iotDbConfigProperties.getUsername())
-                .password(iotDbConfigProperties.getPassword())
-                .maxSize(iotDbConfigProperties.getMaxActive())
-                .timeOut(iotDbConfigProperties.getMaxWait())
-                .connectionTimeoutInMs(iotDbConfigProperties.getConnectionTimeoutInMs())
-                .waitToGetSessionTimeoutInMs(iotDbConfigProperties.getWaitToGetSessionTimeoutInMs())
+                .host(iotDbDTSProperties.getHost())
+                .port(iotDbDTSProperties.getPort())
+                .user(iotDbDTSProperties.getUsername())
+                .password(iotDbDTSProperties.getPassword())
+                .maxSize(iotDbDTSProperties.getMaxActive())
+                .timeOut(60000)
+                .connectionTimeoutInMs(5000)
+                .waitToGetSessionTimeoutInMs(10000)
                 .build();
     }
 

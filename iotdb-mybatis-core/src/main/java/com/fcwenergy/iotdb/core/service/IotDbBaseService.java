@@ -16,6 +16,14 @@ import java.util.List;
 public interface IotDbBaseService<T, Q> {
 
     /**
+     * 查询列表
+     *
+     * @param query 查询条件，createTime必须包含两个时间参数
+     * @return .
+     */
+    List<T> queryAll(Q query);
+
+    /**
      * 分页条件查找
      * 没有不分页的查询，即使查询list也必须用分页，必须控制查询量，否则极易OOM
      *
@@ -23,7 +31,7 @@ public interface IotDbBaseService<T, Q> {
      * @param pageable .
      * @return .
      */
-    PageInfo<T> queryAll(Q query, Pageable pageable);
+    PageInfo<T> queryPage(Q query, Pageable pageable);
 
     /**
      * 新增
