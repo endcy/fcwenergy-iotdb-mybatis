@@ -46,7 +46,8 @@ public class LogKwController {
         logKw.setBattInKw(BigDecimal.valueOf(RandomUtil.randomDouble(0, 200)));
         logKw.setBattOutKw(BigDecimal.valueOf(RandomUtil.randomDouble(0, 200)));
         logKw.setMpptKw(BigDecimal.valueOf(RandomUtil.randomDouble(0, 200)));
-        logKw.setCreateTime(DateUtil.date());
+        Date now = DateUtil.date();
+        logKw.setCreateTime(DateUtil.offsetMillisecond(now, RandomUtil.randomInt(0, 1000000)));
         logKwIotDbService.insert(logKw, logKw.getCreateTime().getTime());
         return true;
     }
